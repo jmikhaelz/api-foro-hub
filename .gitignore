@@ -34,3 +34,6 @@ build/
 
 ### DOCKER ###
 docker/.env
+
+### PROPERTIES ###
+src/main/resources/application.properties
