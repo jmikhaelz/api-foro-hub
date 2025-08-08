@@ -1,5 +1,7 @@
 package mx.alura.forohub.model.topico;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -17,6 +19,7 @@ import mx.alura.forohub.model.curso.Curso;
 import mx.alura.forohub.model.usuario.Usuario;
 
 @Table(name = "topico")
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +29,7 @@ public class Topico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 255, nullable = false)
     private String titulo;
     private String mensaje;
 

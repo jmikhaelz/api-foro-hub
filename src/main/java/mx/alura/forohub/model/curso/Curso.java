@@ -1,5 +1,7 @@
 package mx.alura.forohub.model.curso;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Table(name = "curso")
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +24,7 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100, nullable = false)
     private String nombre;
 
     @Enumerated(EnumType.STRING)

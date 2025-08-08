@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Table(name = "usuario")
-@Entity(name = "user")
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,10 +28,13 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(length = 100, nullable = false)
     private String nombre;
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
+    @Column(length = 255, nullable = false)
     private String psw;
+    //@Column(nullable = true)
     private Integer estatus;
 
     @Override
