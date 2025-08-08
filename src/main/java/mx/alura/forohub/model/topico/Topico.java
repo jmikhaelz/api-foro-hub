@@ -1,0 +1,46 @@
+package mx.alura.forohub.model.topico;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import mx.alura.forohub.model.curso.Curso;
+import mx.alura.forohub.model.usuario.Usuario;
+
+@Table(name = "topico")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class Topico {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String titulo;
+    private String mensaje;
+
+    @Enumerated(EnumType.STRING)
+    private Estatus estatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "autor_id")
+    private Usuario autor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
+
+    public void changEstatus(Estatus es) {
+        this.estatus = es;
+    }
+}
