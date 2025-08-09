@@ -11,6 +11,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 
+import mx.alura.forohub.infra.exceptions.RulesValidationException;
 import mx.alura.forohub.model.usuario.Usuario;
 
 @Service
@@ -25,11 +26,11 @@ public class TokenService {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer(author)
-                    .withSubject(data.getNombre())
+                    .withSubject(data.getEmail())
                     .withExpiresAt(fechaExpiracion())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
-            throw new RuntimeException("Error al generar el token JWT");
+            throw new RulesValidationException(" [TOKEN JWT] Generar token");
         }
     }
 
@@ -46,7 +47,7 @@ public class TokenService {
                     .verify(tokenJWT)
                     .getSubject();
         } catch (Exception e) {
-            throw new RuntimeException("[TOKEN JWT] : Invalidacion o Expirado");
+            throw new RulesValidationException("[TOKEN JWT] : Invalidacion o Expirado");
         }
     }
 }
