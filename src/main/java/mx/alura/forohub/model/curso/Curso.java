@@ -24,9 +24,15 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String nombre;
 
+    @Column(name = "categoria")
     @Enumerated(EnumType.STRING)
     private Categoria cat;
+
+    public Curso(DataCurso data) {
+        this.nombre = data.nombre();
+        this.cat = data.categoria();
+    }
 }
