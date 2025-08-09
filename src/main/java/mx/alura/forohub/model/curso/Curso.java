@@ -35,4 +35,17 @@ public class Curso {
         this.nombre = data.nombre();
         this.cat = data.categoria();
     }
+
+    public void actualizar(DataUpdateCurso data) {
+        if (data == null)
+            return;
+
+        if (data.nombre() != null && !data.nombre().isBlank()) {
+            this.nombre = data.nombre();
+        }
+
+        if (data.categoria() != null && !data.categoria().toString().isBlank()) {
+            this.cat = data.categoria();
+        }
+    }
 }
