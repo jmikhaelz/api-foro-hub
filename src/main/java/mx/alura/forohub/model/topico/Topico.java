@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import mx.alura.forohub.infra.exceptions.RulesValidationException;
 import mx.alura.forohub.model.curso.Curso;
 import mx.alura.forohub.model.usuario.Usuario;
 
@@ -46,5 +47,17 @@ public class Topico {
 
     public void changEstatus(Estatus es) {
         this.estatus = es;
+    }
+
+    public void actualizar(DataUpdateTopico data) {
+        if (data == null) {
+            throw new RulesValidationException("Solicitud vacia");
+        }
+        if (data.titulo() != null && !data.titulo().isBlank()) {
+            this.titulo = data.titulo();
+        }
+        if (data.mensaje() != null && !data.mensaje().isBlank()) {
+            this.mensaje = data.mensaje();
+        }
     }
 }
