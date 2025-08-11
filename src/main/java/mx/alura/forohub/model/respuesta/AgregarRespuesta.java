@@ -24,7 +24,7 @@ public class AgregarRespuesta {
         var topico = buscarTopico(data);
 
         var publicacion = new Respuesta(
-                null, data.mensaje(), topico, usuario, null, null);
+                null, data.mensaje(), topico, usuario, 1, null);
 
         resp.save(publicacion);
 
