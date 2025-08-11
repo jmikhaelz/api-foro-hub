@@ -42,12 +42,12 @@ public class Respuesta {
     private Usuario autor;
 
     private Integer solucion;
-    
+
     @CreationTimestamp
     @Column(name = "creacion", nullable = false, updatable = false)
     private LocalDateTime creacion;
 
-    public void isSolucion() {
-        this.solucion = 1;
+    public void changeMsg(String msg) {
+        this.mensaje = msg;
     }
 }
