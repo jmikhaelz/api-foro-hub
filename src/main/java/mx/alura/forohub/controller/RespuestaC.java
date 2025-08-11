@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import mx.alura.forohub.model.respuesta.AgregarRespuesta;
+import mx.alura.forohub.model.respuesta.DataAboutRespuesta;
 import mx.alura.forohub.model.respuesta.DataEnviarRespuesta;
 import mx.alura.forohub.model.respuesta.DataListRespuesta;
 import mx.alura.forohub.model.respuesta.DataListRespuestaModelAssembler;
+import mx.alura.forohub.model.respuesta.DataUpdateRespuesta;
 import mx.alura.forohub.repository.RespuestaRes;
 
 @RestController
@@ -52,5 +55,15 @@ public class RespuestaC {
                         m.getAutor().getNombre()));
         var page = pagedResourcesAssembler.toModel(pagina, dataListRespuestaModelAssembler);
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<Object> actualizar(@RequestBody @Valid DataUpdateRespuesta data) {
+        var respuesta = resp.getReferenceById(data.id());
+        respuesta.changeMsg(data.mensaje());
+
+        return ResponseEntity.ok(
+                new DataAboutRespuesta(respuesta));
     }
 }
