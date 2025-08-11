@@ -1,9 +1,16 @@
 package mx.alura.forohub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +24,8 @@ import jakarta.validation.Valid;
 import mx.alura.forohub.model.topico.AgregarConsulta;
 import mx.alura.forohub.model.topico.DataAboutForo;
 import mx.alura.forohub.model.topico.DataCitarTopico;
+import mx.alura.forohub.model.topico.DataListTopico;
+import mx.alura.forohub.model.topico.DataListTopicoModelAssembler;
 import mx.alura.forohub.model.topico.DataUpdateTopico;
 import mx.alura.forohub.model.topico.Estatus;
 import mx.alura.forohub.repository.TopicoResp;
@@ -29,6 +38,10 @@ public class TopicoC {
     private AgregarConsulta toolAgregar;
     @Autowired
     private TopicoResp resp;
+    @Autowired
+    private PagedResourcesAssembler<DataListTopico> pagedResourcesAssembler;
+    @Autowired
+    private DataListTopicoModelAssembler DataListTopicoModelAssembler;
 
     @PostMapping
     @Transactional
@@ -52,5 +65,16 @@ public class TopicoC {
         return ResponseEntity.ok(
                 new DataAboutForo(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getAutor().getId(),
                         topico.getCurso().getId()));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<PagedModel<EntityModel<DataListTopico>>> getList(
+            @PageableDefault(size = 10, sort = { "titulo" }) Pageable paginacion) {
+        Page<DataListTopico> pagina = resp.findAllByEstatusAbierto(paginacion).map(
+                m -> new DataListTopico(m.getId(), m.getTitulo(), m.getMensaje(), m.getCreacion(),
+                        m.getAutor().getNombre(),
+                        m.getCurso().getNombre()));
+        var page = pagedResourcesAssembler.toModel(pagina, DataListTopicoModelAssembler);
+        return ResponseEntity.ok(page);
     }
 }
