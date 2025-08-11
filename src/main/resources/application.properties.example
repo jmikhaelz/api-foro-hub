@@ -1,1 +1,16 @@
 spring.application.name=forohub
+
+spring.datasource.url=jdbc:mysql://localhost:3306/forohub_api
+spring.datasource.username={INGRESE SU USER}
+spring.datasource.password={INGRESE SU PSW}
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.show=true
+spring.jpa.format-sql=true
+spring.jpa.open-in-view=false
+
+server.error.include-stacktrace=never
+
+api.security.token.secret=${JWT_SECRET:USER QUE QUIERA AGREGAR}
+api.security.token.author=${JWT_AUTHOR:NOMBRE DE AUTOR}
