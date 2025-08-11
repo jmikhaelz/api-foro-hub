@@ -9,7 +9,9 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,5 +67,15 @@ public class RespuestaC {
 
         return ResponseEntity.ok(
                 new DataAboutRespuesta(respuesta));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Object> eliminar(@PathVariable Long id) {
+        if (!resp.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        resp.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
