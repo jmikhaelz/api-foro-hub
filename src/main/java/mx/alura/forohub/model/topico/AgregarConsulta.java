@@ -36,7 +36,7 @@ public class AgregarConsulta {
         validCheckup.forEach(v -> v.valid(data));
 
         var consulta = new Topico(
-                null, data.titulo(), data.mensaje(), Estatus.abierto, usuario, curso);
+                null, data.titulo(), data.mensaje(), Estatus.abierto, usuario, curso, null);
 
         topicoResp.save(consulta);
 
