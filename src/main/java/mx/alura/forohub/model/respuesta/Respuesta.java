@@ -1,5 +1,10 @@
 package mx.alura.forohub.model.respuesta;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +42,10 @@ public class Respuesta {
     private Usuario autor;
 
     private Integer solucion;
+    
+    @CreationTimestamp
+    @Column(name = "creacion", nullable = false, updatable = false)
+    private LocalDateTime creacion;
 
     public void isSolucion() {
         this.solucion = 1;
