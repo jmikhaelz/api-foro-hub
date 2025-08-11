@@ -1,5 +1,9 @@
 package mx.alura.forohub.model.topico;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -44,6 +48,10 @@ public class Topico {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
+    @CreationTimestamp
+    @Column(name = "creacion", nullable = false, updatable = false)
+    private LocalDateTime creacion;
 
     public void changEstatus(Estatus es) {
         this.estatus = es;
